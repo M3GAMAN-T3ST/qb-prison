@@ -2,17 +2,27 @@ local QBCore = exports['qb-core']:GetCoreObject()
 local GotItems = {}
 local AlarmActivated = false
 
+-- RegisterNetEvent('prison:server:SetJailStatus', function(jailTime)
+--     local src = source
+--     local Player = QBCore.Functions.GetPlayer(src)
+--     if not Player then return end
+--     Player.Functions.SetMetaData('injail', jailTime)
+--     if jailTime > 0 then
+--         if Player.PlayerData.job.name ~= 'unemployed' then
+--             Player.Functions.SetJob('unemployed')
+--             TriggerClientEvent('QBCore:Notify', src, Lang:t('info.lost_job'))
+--         end
+--     else
+--         GotItems[source] = nil
+--     end
+-- end)
+
 RegisterNetEvent('prison:server:SetJailStatus', function(jailTime)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     if not Player then return end
-    Player.Functions.SetMetaData('injail', jailTime)
-    if jailTime > 0 then
-        if Player.PlayerData.job.name ~= 'unemployed' then
-            Player.Functions.SetJob('unemployed')
-            TriggerClientEvent('QBCore:Notify', src, Lang:t('info.lost_job'))
-        end
-    else
+    Player.Functions.SetMetaData("injail", jailTime)
+    if jailTime < 0 then
         GotItems[source] = nil
     end
 end)
